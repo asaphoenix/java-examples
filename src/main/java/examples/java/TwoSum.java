@@ -1,47 +1,49 @@
 package examples.java;
 
-import examples.utils.SortUtil;
+import examples.utils.IndexedInt;
+import examples.utils.Util;
 
 public class TwoSum {
-    public class IndexedInt implements Comparable<IndexedInt> {
-        public int index;
-        public int value;
-
-        IndexedInt(int index, int value) {
-            this.index = index;
-            this.value = value;
-        }
-
-        @Override
-        public int compareTo(IndexedInt o) {
-            return value - o.value;
-        }
-    }
+    public int numExec = 0;
 
     public int[] twoSum(int[] nums, int target) {
-        IndexedInt[] idxInts = new IndexedInt[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            idxInts[i] = new IndexedInt(i, nums[i]);
+        System.out.println("Sum:  " + target);
+        IndexedInt[] idxInts = IndexedInt.valueOf(nums);
+
+        System.out.print("Input  = ");
+        for (int i = 0; i < idxInts.length; i++) {
+            System.out.print(", " + idxInts[i].value);
+        }
+        System.out.println("");
+
+        Util.quickSort(idxInts, 0, idxInts.length - 1);
+
+        System.out.print("Sorted = ");
+        for (int i = 0; i < idxInts.length; i++) {
+            System.out.print(", " + idxInts[i].value);
+        }
+        System.out.println("");
+        System.out.println("Soring O(n): " + Util.numExec);
+
+        int endIndex = idxInts.length;
+
+        for (int i = 0; i < endIndex - 1; i++) {
+            for (int j = i + 1; j < endIndex; j++) {
+                numExec ++;
+                System.out.println("i: " + i + ", j: " + j + ", endIndex: " + endIndex);
+                int sum = idxInts[i].value + idxInts[j].value;
+                if (sum == target) {
+                    if (idxInts[i].index < idxInts[j].index)
+                        return new int[]{idxInts[i].index, idxInts[j].index};
+                    else
+                        return new int[]{idxInts[j].index, idxInts[i].index};
+                } else if (sum > target) {
+                    endIndex = j - 1;
+                    break;
+                }
+            }
         }
 
-        sort(idxInts);
-        for (int i = 0; i < idxInts.length - 1; i++) {
-            IndexedInt secondInt = findSecond(idxInts, i + 1, target - idxInts[i].value);
-            if (secondInt != null)
-                return new int[] {idxInts[i].index, secondInt.index};
-        }
-
-        return null;
-    }
-
-    public void sort(IndexedInt[] nums) {
-        SortUtil.quickSort(nums, 0, nums.length - 1);
-    }
-
-    private IndexedInt findSecond(IndexedInt[] nums, int startIndex, int value) {
-        if (startIndex == nums.length - 1) {
-            //if (nums[startIndex].value == value)
-        }
         return null;
     }
 }

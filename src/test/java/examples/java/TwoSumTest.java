@@ -1,30 +1,22 @@
 package examples.java;
 
-import examples.utils.NumUtil;
 import org.junit.Test;
 
-public class TwoSumTest {
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+public class TwoSumTest {
     @Test
-    public void testSort() {
-        int TEST_NUM = 20;
-        TwoSum.IndexedInt[] input = new TwoSum.IndexedInt[TEST_NUM];
-        Integer[] randomInts = NumUtil.randomNumbersWithoutRepetition(427, 50, TEST_NUM);
-        System.out.print("Random Integers:");
-        for (int i = 0; i < TEST_NUM; i++) {
-            input[i] = new TwoSum().new IndexedInt(i, randomInts[i]);
-            System.out.print(" " + input[i].value);
-        }
-        System.out.println();
+    public void testTwoSum() {
+        int[] input = new int[] {66, 67, 68, 6, 8, 73, 10, 75, 76, 12, 15, 17, 19, 20, 86, 87, 23, 24, 89, 90, 26, 28, 94, 95, 42, 45, 49, 52, 56, 60};
+        int target = 126;
 
         TwoSum twoSum = new TwoSum();
-        twoSum.sort(input);
+        int[] result = twoSum.twoSum(input, target);
+        System.out.println("TwoNum O(n): " + twoSum.numExec);
 
-        System.out.print("Sorted integers: " + input[0].value);
-        for (int i = 1; i < input.length; i++) {
-            System.out.print(" " + input[i].value);
-            //assertTrue(input[i].value >= input[i - 1].value);
-        }
-        System.out.println();
+        assertNotNull(result);
+        assertEquals(input[result[0]] + input[result[1]], target);
+        System.out.println("Found two sum's elements: " + result[0] + ":" + result[1]);
     }
 }
